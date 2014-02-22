@@ -1,23 +1,22 @@
 import pygame
-
+from world_object import WorldObject
 pygame.init()
-
-
-size = width, height = 320, 240
+size = width, height = 1280, 720
 speed = [2, 2]
 black = 0, 0, 0
 screen = pygame.display.set_mode(size)
-ball = pygame.image.load("ball.gif")
-ballrect = ball.get_rect()
-
+clock = pygame.time.Clock()
+FPS = 60
+wo = WorldObject(FPS)
 while 1:
     for event in pygame.event.get():
         if event.type == pygame.QUIT: sys.exit()
-        ballrect = ballrect.move(speed)
-        if ballrect.left < 0 or ballrect.right > width:
-            speed[0] = -speed[0]
-        if ballrect.top < 0 or ballrect.bottom > height:
-            speed[1] = -speed[1]
-        screen.fill(black)
-        screen.blit(ball, ballrect)
-        pygame.display.flip()
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_RIGHT:
+                wo.move_right()
+        if event.type == pygame.KEYUP:
+            wo.stop_moving()
+    screen.fill(black)
+    screen.blit(wo.animate(), wo.rect())
+    pygame.display.flip()
+    clock.tick(FPS)
