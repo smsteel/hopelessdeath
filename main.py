@@ -1,3 +1,4 @@
+#!/usr/bin/python2.7
 import pygame
 from world_object import WorldObject
 pygame.init()
